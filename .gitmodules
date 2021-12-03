@@ -1,0 +1,9 @@
+[submodule "api"]
+	path = api
+	url = https://github.com/hsghost/kleina-api.git
+[submodule "admin"]
+	path = admin
+	url = https://github.com/hsghost/kleina-admin.git
+[submodule "devices"]
+	path = devices
+	url = https://github.com/hsghost/kleina-devices.git
