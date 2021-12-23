@@ -2,11 +2,14 @@
 	path = api
 	url = https://github.com/hsghost/kleina-api.git
 	branch = dev
+	update = merge
 [submodule "admin"]
 	path = admin
 	url = https://github.com/hsghost/kleina-admin.git
 	branch = dev
+	update = merge
 [submodule "devices"]
 	path = devices
 	url = https://github.com/hsghost/kleina-devices.git
 	branch = dev
+	update = merge

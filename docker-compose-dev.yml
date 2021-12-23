@@ -1,0 +1,109 @@
+version: '2'
+volumes:
+    api-db:
+services:
+    # admin: 
+    #     build: 
+    #         context: ./admin
+    #         dockerfile: Dockerfile-dev
+    #     volumes:
+    #         - 'api-db:/api-db:rw'
+    #     restart: no
+    #     labels: 
+    #         io.balena.features.supervisor-api: '1'
+    #         io.balena.features.balena-api: '1'
+    #         io.balena.features.dbus: '1'
+    # system-proxy:
+    #     build: ./system-proxy
+    #     restart: always
+    #     ports: 
+    #         - "80:2017"
+    #         - "20177:20177"
+    #     environment: 
+    #         - DEBUG
+            # - GITHUB_USER
+            # - GITHUB_TOKEN
+            # - ADMIN_COMMIT
+    #         - 'DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket'
+    #     labels: 
+    #         io.balena.features.supervisor-api: '1'
+    #         io.balena.features.dbus: '1'
+    # devices:
+    #     build: 
+    #         context: ./devices
+    #         dockerfile: Dockerfile-dev
+    #     restart: always
+    #     devices:
+    #         - "/dev/gpiomem:/dev/gpiomem"
+    #     cap_add:
+    #         - SYS_RAWIO
+    #     environment: 
+    #         - DEBUG
+            # - GITHUB_USER
+            # - GITHUB_TOKEN
+            # - DEVICES_COMMIT
+    #     expose:
+    #         - "32123"
+    #     labels:
+    #         io.balena.features.sysfs: '1'
+    api:
+        build: 
+            context: ./api
+            dockerfile: Dockerfile-dev
+        volumes:
+            - 'api-db:/api-db:ro'
+        restart: always
+        # depends_on:
+        #     - devices
+        environment:
+            - DEBUG
+            - GITHUB_USER
+            - GITHUB_TOKEN
+            # - API_COMMIT
+        expose:
+            - "32125"
+    # gpio:
+    #     build: ./gpio
+    #     # restart: always
+    #     # devices:
+    #     #     - "/dev/gpiomem:/dev/gpiomem"
+    #     # cap_add:
+    #     #     - SYS_RAWIO
+    #     environment: 
+    #         - DEBUG
+    #     expose:
+    #         - "32123"
+    #     labels:
+    #         io.balena.features.sysfs: '1'
+    # rfid:
+    #     build: ./rfid
+    #     # restart: always
+    #     devices:
+    #         # - "/dev/gpiomem:/dev/gpiomem"
+    #         - "/dev/ttyS1:/dev/ttyS1"
+    #         - "/dev/ttyS3:/dev/ttyS3"
+    #         - "/dev/ttyS4:/dev/ttyS4"
+    #     cap_add: 
+    #         - SYS_RAWIO
+    #     # depends_on: 
+    #         # - data_store
+    #     expose: 
+    #         - "32120"
+    # transaction: 
+    #     build: ./transaction
+    #     restart: always
+    #     depends_on: 
+    #         - rfid
+    #         - data_store
+    #     expose: 
+    #         - ""
+    # locks_auth:
+    #     build: ./locks_auth
+    #     restart: always
+    #     depends_on: 
+    #         - locks
+    #         - transaction
+    #         - data_store
+    # data_store: 
+    #     build: ./data_store
+    #     restart: always
